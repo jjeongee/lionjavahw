@@ -2,113 +2,119 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class BankAtm {
-    private static String accountnumber ="";
-    private static String membername =" ";
-    private static Integer accountmoney =0;
-    private static Integer deltamoney =0;
-    private static String register;
-    private static Scanner sc = new Scanner(System.in);
-    private static boolean isCreated=false; //계좌 생성 여부
-    //전체 메뉴 작성
+public class BankAtm{
     public static void main(String[] args) {
+        boolean run = false;
+        Scanner sc=new Scanner(System.in);
+        Integer run_input;
+        String accountnum;
+        String insertnum;
+        String username;
+        Integer accountmoney;
+        Integer deltamoney;
+        ArrayList users= new ArrayList();
+        HashMap user=new HashMap();
+
         do{
-            System.out.println("=====Bank Menu=====");
-            System.out.println("1.계좌 개설");
-            System.out.println("2.입금하기");
-            System.out.println("3.출금하기");
-            System.out.println("4.전체조회");
-            System.out.println("5.계좌이체");
-            System.out.println("6.전체종료");
-            System.out.println("===================");
-            System.out.println("입력 : ");
+            System.out.println("======Bank Menu=====");
+            System.out.println("1. 계좌 개설");
+            System.out.println("2. 입금하기");
+            System.out.println("3. 출금하기");
+            System.out.println("4. 전체조회");
+            System.out.println("5. 프로그램 종료");
+            System.out.println("=====================");
 
-            Integer register_input=sc.nextInt();
-            boolean stop=false;
-            ArrayList members=new ArrayList<>();
+            System.out.println("입력: ");
+            run_input = sc.nextInt();
 
-            while(!stop){
-    
-                    //파이썬 dictonary와 같은 기능
-                    HashMap account = new HashMap();
-                
-                if(register_input==1){
+            switch(run_input){
+                case 1:
+                if(run_input==1){
+                    run=true;
                     System.out.println("=====계좌 개설=====");
-                    //계좌 생성
-                    System.out.println("계좌번호: ");
-                    accountnumber=sc.nextLine();
+                    System.out.println("계좌 번호: ");
+                    accountnum=sc.next();
                     System.out.println("이름: ");
-                    membername=sc.nextLine();
+                    username=sc.next();
                     System.out.println("예금: ");
                     accountmoney=sc.nextInt();
-                    System.out.println("##계좌개설이 완료되었습니다.##");
-                    System.out.println("==============");
     
-                    account.put("accountnumber", accountnumber);
-                    account.put("membername", membername);
-                    account.put("accountmoney", accountmoney);
+                    user.put("accountnum",accountnum);
+                    user.put("username",username);
+                    user.put("accountmoney",accountmoney);
+                    users.add(user);
     
-                    //리스트에 각 사람의 계좌와 정보를 저장
-                    members.add(account);
-    
+                    System.out.println("##계좌개설을 완료하였습니다##");
+                    System.out.println("=================");
                 }
-                else if(register_input==2){
-                    System.out.println("=====입금 하기=====");
-                     //입금하기(입력)
-                    System.out.println("입금하실 계좌번호를 입력해주세요: ");
-                    accountnumber=sc.nextLine();
-                    System.out.println("이름: "+account.get(membername));
-                    System.out.println("예금: "+account.get(accountmoney));
-                    System.out.println("입금하실 금액을 입력해주세요: ");
+                break;
+                
+                case 2:
+                if(run_input==2){
+                    run=true;
+                    System.out.println("=================");
+                    System.out.println("입금하실 계좌번호를 입력해주세요:");
+                    insertnum=sc.next();
+                    System.out.println("계좌 이름 : "+ user.get("username"));
+                    System.out.println("계좌 잔고 : "+ user.get("accountmoney"));
+                    System.out.println("입금할 금액을 입력하세요: ");
                     deltamoney=sc.nextInt();
-                    accountmoney+=deltamoney;
-                    account.put("finalmoney",accountmoney);
-                    //입금하기(출력)
-                    System.out.println("##계좌 잔고: "+account.get("finalmoney")+"원 ##");
-                    System.out.println("##입금이 완료되었습니다.##");
-                    System.out.println("==============");
-    
+                    if(deltamoney<=0){
+                        System.out.println("금액 입력이 올바르지 않습니다");
+                    }
+                    else{
+                        user.put("accountmoney",(int)user.get("accountmoney")+deltamoney);
+                        System.out.println("##계좌 잔고:"+user.get("accountmoney")+"###");
+                        System.out.println("입금이 완료되었습니다");
+                        System.out.println("==============");
+                    }
                 }
-                else if(register_input==3){
-                    System.out.println("=====출금 하기=====");
-                    //출금하기(입력)
-                    System.out.println("출금하실 계좌번호를 입력해주세요: ");
-                    accountnumber=sc.nextLine();
-                    System.out.println("이름: "+account.get(membername));
-                    System.out.println("예금: "+account.get(accountmoney));
-                    System.out.println("출금하실 금액을 입력해주세요: ");
+                break;
+
+                case 3:
+                if(run_input==3){
+                    run=true;
+                    System.out.println("=================");
+                    System.out.println("출금하실 계좌번호를 입력해주세요:");
+                    insertnum=sc.next();
+                    System.out.println("계좌 이름 : "+ user.get("username"));
+                    System.out.println("계좌 잔고 : "+ user.get("accountmoney"));
+                    System.out.println("출금할 금액을 입력하세요: ");
                     deltamoney=sc.nextInt();
-                    accountmoney-=deltamoney;
-                    account.put("finalmoney",accountmoney);
-                    //출금하기(출력)
-                    System.out.println("##계좌 잔고: "+account.get("finalmoney")+"원 ##");
-                    System.out.println("##출금이 완료되었습니다.##");
-                    System.out.println("==============");
-    
+                    if(deltamoney<(int)user.get("accountmoney")){
+                        user.put("accountmoney",(int)user.get("accountmoney")-deltamoney);
+                        System.out.println("##계좌 잔고:"+user.get("accountmoney")+"###");
+                        System.out.println("출금이 완료되었습니다");
+                        System.out.println("==============");
+                    }
+                    else{
+                        System.out.println("잔고 부족");
+                    }
                 }
-                else if(register_input==4){
-                    System.out.println("=====전체 조회=====");
+                break;
+
+                case 4:
+                if(run_input==4){
+                    run=true;
+                    System.out.println("====전체 조회=====");
+                    for(Object account : users){
+                        System.out.println(account);
+                    }
                 }
-                else if(register_input==5){
-                    System.out.println("=====계좌 이체=====");
-                }
-                else if(register_input==6){
-                    System.out.println("##프로그램을 종료합니다.##");
-                    System.exit(0);
+                break;
+
+                case 5:
+                if(run_input==5){
+                    run=false;
+                    System.out.println("입력을 종료합니다");
                     break;
                 }
-                else{
-                    System.out.println("잘못된 입력값입니다. 입력값을 확인해주세요");
-                }
-    
 
+                default:
+                    System.out.println("잘못된 입력입니다.");
+                    break;
             }
-
-        }   
+        }while(run_input!=5);
+    
     }
 }
-            
-           
-            
-            
-
